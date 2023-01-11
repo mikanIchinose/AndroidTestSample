@@ -22,4 +22,11 @@ class Game(private val questions: List<Question>, highest: Int = 0) {
         }
         return null
     }
+
+    fun answer(question: Question, option: String) {
+        val result = question.answer(option)
+        if (result) {
+            incrementScore()
+        }
+    }
 }
