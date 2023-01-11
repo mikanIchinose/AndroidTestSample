@@ -1,8 +1,7 @@
 package com.github.android.test.sample.game.model
 
-import org.junit.Assert.assertEquals
-import org.junit.Assert.assertNull
-import org.junit.Assert.assertSame
+import com.google.common.truth.Truth.assertThat
+import com.google.common.truth.Truth.assertWithMessage
 import org.junit.Test
 
 class GameUnitTest {
@@ -10,21 +9,25 @@ class GameUnitTest {
     fun whenIncrementingScore_shouldIncrementCurrentScore() {
         val game = Game(emptyList(), 0)
         game.incrementScore()
-        assertEquals("Current score should have be 1", 1, game.currentScore)
+        assertWithMessage("Current score should have be 1")
+            .that(game.currentScore)
+            .isEqualTo(1)
     }
 
     @Test
     fun whenIncrementingScore_shouldAlsoIncrementHighScore() {
         val game = Game(emptyList(), 0)
         game.incrementScore()
-        assertEquals(1, game.highestScore)
+        assertThat(game.highestScore)
+            .isEqualTo(1)
     }
 
     @Test
     fun whenIncrementingScore_belowHighScore_shouldNotIncrementHighScore() {
         val game = Game(emptyList(), 10)
         game.incrementScore()
-        assertEquals(10, game.highestScore)
+        assertThat(game.highestScore)
+            .isEqualTo(10)
     }
 
     @Test
@@ -33,7 +36,8 @@ class GameUnitTest {
         val questions = listOf(question)
         val game = Game(questions, 0)
         val nextQuestion = game.nextQuestion()
-        assertSame(question, nextQuestion)
+        assertThat(nextQuestion)
+            .isSameInstanceAs(question)
     }
 
     @Test
@@ -43,6 +47,6 @@ class GameUnitTest {
         val game = Game(questions, 0)
         game.nextQuestion()
         val nextQuestion = game.nextQuestion()
-        assertNull(nextQuestion)
+        assertThat(nextQuestion).isNull()
     }
 }

@@ -1,9 +1,6 @@
 package com.github.android.test.sample.game.model
 
-import org.junit.Assert.assertEquals
-import org.junit.Assert.assertFalse
-import org.junit.Assert.assertNull
-import org.junit.Assert.assertTrue
+import com.google.common.truth.Truth.assertThat
 import org.junit.Before
 import org.junit.Test
 
@@ -17,25 +14,25 @@ class QuestionUnitTest {
 
     @Test
     fun whenCreatingQuestion_shouldNotHaveAnsweredOption() {
-        assertNull(question.answeredOption)
+        assertThat(question.answeredOption).isNull()
     }
 
     @Test
     fun whenAnswering_shouldHaveAnsweredOption() {
         question.answer("INCORRECT")
-        assertEquals("INCORRECT", question.answeredOption)
+        assertThat(question.answeredOption).isEqualTo("INCORRECT")
     }
 
     @Test
     fun whenAnswering_withCorrectOption_shouldReturnTrue() {
         val result = question.answer("CORRECT")
-        assertTrue(result)
+        assertThat(result).isTrue()
     }
 
     @Test
     fun whenAnswering_withIncorrectOption_shouldReturnTrue() {
         val result = question.answer("INCORRECT")
-        assertFalse(result)
+        assertThat(result).isFalse()
     }
 
     @Test(expected = IllegalArgumentException::class)
@@ -46,6 +43,7 @@ class QuestionUnitTest {
     @Test
     fun whenGettingOption_shouldReturnOptionsWithCustomSort() {
         val options = question.getOptions { it.reversed() }
-        assertEquals(listOf("INCORRECT", "CORRECT"), options)
+        assertThat(options)
+            .isEqualTo(listOf("INCORRECT", "CORRECT"))
     }
 }
